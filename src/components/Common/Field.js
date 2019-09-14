@@ -7,32 +7,24 @@ export default class Field extends Component {
         {this.props.elementName === "input" ? (
           <input
             className='form-control'
-            id='name'
-            type='text'
-            placeholder='Your Name *'
+            id={this.props.name}
+            type={this.props.type}
+            placeholder={this.props.placeholder}
             required='required'
             data-validation-required-message='Please enter your name.'
-            value={this.state.name}
-            onChange={e =>
-              this.setState({
-                name: e.target.value
-              })
-            }
+            value={this.props.value}
+            onChange={e => this.props.onChange(e)}
           />
         ) : (
           <textarea
             className='form-control'
-            id='message'
-            placeholder='Your Message *'
+            id={this.props.name}
+            placeholder={this.props.placeholder}
             required='required'
             data-validation-required-message='Please enter a message.'
-            value={this.state.message}
-            onChange={e =>
-              this.setState({
-                message: e.target.value
-              })
-            }
-          ></textarea>
+            value={this.props.value}
+            onChange={e => this.props.onChange(e)}
+          />
         )}
         <p className='help-block text-danger'></p>
       </div>

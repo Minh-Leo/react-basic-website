@@ -1,28 +1,35 @@
 import React, {Component} from "react";
 import Field from "../Common/Field";
 
-const fieldsLeft = [
-  {name: "name", elementName: "input", type: "text", placeholder: "Your name"},
-  {
-    name: "email",
-    elementName: "input",
-    type: "email",
-    placeholder: "Your email"
-  },
-  {
-    name: "phone",
-    elementName: "input",
-    type: "number",
-    placeholder: "Your phone"
-  }
-];
-const fieldsRight = [
-  {
-    name: "message",
-    elementName: "textarea",
-    type: "text",
-    placeholder: "Your message"
-  }
+const fields = [
+  [
+    {
+      name: "name",
+      elementName: "input",
+      type: "text",
+      placeholder: "Your name"
+    },
+    {
+      name: "email",
+      elementName: "input",
+      type: "email",
+      placeholder: "Your email"
+    },
+    {
+      name: "phone",
+      elementName: "input",
+      type: "number",
+      placeholder: "Your phone"
+    }
+  ],
+  [
+    {
+      name: "message",
+      elementName: "textarea",
+      type: "text",
+      placeholder: "Your message"
+    }
+  ]
 ];
 
 export default class Contact extends Component {
@@ -31,6 +38,11 @@ export default class Contact extends Component {
     email: "",
     phone: "",
     message: ""
+  };
+
+  submitForm = e => {
+    e.preventDefault();
+    alert("submit");
   };
 
   render() {
@@ -47,14 +59,38 @@ export default class Contact extends Component {
           </div>
           <div className='row'>
             <div className='col-lg-12'>
-              <form id='contactForm' name='sentMessage' novalidate='novalidate'>
+              <form
+                name='sentMessage'
+                novalidate='novalidate'
+                onSubmit={e => this.submitForm(e)}
+              >
                 <div className='row'>
                   {/*  */}
+                  {fields.map((field, index) => {
+                    return (
+                      <div className='col-md-6' key={index}>
+                        {field.map((item, id) => {
+                          return (
+                            <Field
+                              {...item}
+                              key={id}
+                              value={this.state[item.name]}
+                              onChange={e =>
+                                this.setState({
+                                  [item.name]: e.target.value
+                                })
+                              }
+                            />
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
+
                   <div className='clearfix'></div>
                   <div className='col-lg-12 text-center'>
                     <div id='success'></div>
                     <button
-                      id='sendMessageButton'
                       className='btn btn-primary btn-xl text-uppercase'
                       type='submit'
                     >
